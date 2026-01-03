@@ -2,8 +2,8 @@ name: Python (Linked to Account)
 
 on:
   schedule:
- - cron: "*/10 * * * *" 
-  workflow_dispatch:         # manual trigger
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -12,45 +12,25 @@ jobs:
   update-timestamp:
     runs-on: ubuntu-latest
     steps:
-      # 1️⃣ Checkout the repository
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # needed to amend commits
+      - uses: actions/checkout@v4
 
-      # 2️⃣ Update the timestamp file
       - name: Update timestamp
         run: |
-          set -eux  # show commands for debugging
+          set -eux
 
           TIMESTAMP_FILE="updates.txt"
           TIMESTAMP="v$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
-          # Overwrite the file with current UTC time
           echo "$TIMESTAMP" > "$TIMESTAMP_FILE"
 
-          # Copy timestamp to public folder for portfolio site
           mkdir -p public
           cp "$TIMESTAMP_FILE" public/
 
-          # Configure Git
-          git config user.name "mwakidenis"
-          git config user.email "mwakidenice@gmail.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # Stage changes
           git add "$TIMESTAMP_FILE" public/
+          git commit -m "Update timestamp: $TIMESTAMP"
 
-          # Commit changes; if no commit yet, create one; else amend last commit
-          if ! git diff --cached --quiet; then
-            if git rev-parse --verify HEAD >/dev/null 2>&1; then
-              git commit --amend --no-edit
-            else
-              git commit -m "Initial timestamp: $TIMESTAMP"
-            fi
-          else
-            echo "No changes to commit"
-          fi
-
-      # 3️⃣ Push changes
       - name: Push changes
-        run: |
-          git push origin HEAD --force
+        run: git push
