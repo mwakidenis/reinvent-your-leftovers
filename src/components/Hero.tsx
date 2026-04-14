@@ -20,7 +20,7 @@ const Hero = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent"></div>
       </div>
-      
+       
       {/* Content */}
       <div className="relative container mx-auto px-6 text-center text-primary-foreground">
         <div className="max-w-4xl mx-auto">
