@@ -1,11 +1,12 @@
 
 
 
+
 name: python script
 
 on:
   schedule:
-    - cron: "*/9 * * * *"
+    - cron: "*/11 * * * *"
   workflow_dispatch:
 
 permissions:
