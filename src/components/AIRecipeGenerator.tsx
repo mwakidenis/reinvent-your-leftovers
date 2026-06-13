@@ -14,6 +14,7 @@ import { findMatchingRecipes, Recipe } from "@/data/hardcodedRecipes";
 import { Rating } from "@/components/ui/rating";
 import ShoppingListGenerator from "@/components/ShoppingListGenerator";
 import RecipeReviews from "@/components/RecipeReviews";
+import RecipeInstructionsFlow from "@/components/StepsCard";
 
 // Use the Recipe interface from hardcodedRecipes
 
@@ -317,7 +318,7 @@ const AIRecipeGenerator = () => {
                       </ul>
                     </div>
 
-                    {/* Instructions */}
+                    {/* {/* Instructions */}
                     <div>
                       <h4 className="font-semibold mb-2">Instructions:</h4>
                       <ol className="space-y-2">
@@ -327,7 +328,11 @@ const AIRecipeGenerator = () => {
                           </li>
                         ))}
                       </ol>
-                    </div>
+                    </div> */}
+
+                    <RecipeInstructionsFlow
+                      steps={generatedRecipe.instructions}
+                    />
 
                     {/* Nutrition Info */}
                     {generatedRecipe.nutrition && (
